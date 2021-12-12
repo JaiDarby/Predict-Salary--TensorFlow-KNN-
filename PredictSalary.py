@@ -34,22 +34,25 @@ x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y
 #Set how many neighbors you're lookign for
 model = KNeighborsClassifier(n_neighbors = 5)
 
-#Train Model
-model.fit(x_train,y_train)
+BestAcc = 0
+for i in range(10):
+    #Train Model
+    model.fit(x_train,y_train)
 
-#Test Model
-Accuracy = model.score(x_test,y_test)
+    #Test Model
+    Accuracy = model.score(x_test,y_test)
 
-'''
-Prediction = model.predict(x_test)
-name = ["Less", "Greater"]
+    #Prints Accuracy
+    print("Accuracy:", round(Accuracy, 2))
 
-for x in range(len(Prediction)):
-    print("Guess:",name[Prediction[x]], "Actual:", name[y_test[x]])
-'''
+    #Updates pickle file if hiigher accuracy
+    if Accuracy > BestAcc:
+        BestAcc = Accuracy
+        with open("SalaryModel.pickle", "wb") as f:
+            pickle.dump(model, f)
 
 #Print Accuracy
-print("Accuracy:", round(Accuracy, 2))
+print("Best Accuracy:", round(Accuracy, 2))
 
 
 
