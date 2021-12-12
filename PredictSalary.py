@@ -1,14 +1,11 @@
 #Importing all libraries
-import tensorflow
-import keras
 import pandas as pd
 import numpy as np
 import sklearn
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn import linear_model, preprocessing
 from sklearn.utils import shuffle
-import matplotlib.pyplot as pyplot
 import pickle
-from matplotlib import style
 
 data = pd.read_csv("AdultData.csv", sep = ", ", engine ="python")
 
@@ -34,6 +31,25 @@ y= list(Salary)
 #Grabs 10% of data to train model
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size = 0.1)
 
+#Set how many neighbors you're lookign for
+model = KNeighborsClassifier(n_neighbors = 5)
+
+#Train Model
+model.fit(x_train,y_train)
+
+#Test Model
+Accuracy = model.score(x_test,y_test)
+
+'''
+Prediction = model.predict(x_test)
+name = ["Less", "Greater"]
+
+for x in range(len(Prediction)):
+    print("Guess:",name[Prediction[x]], "Actual:", name[y_test[x]])
+'''
+
+#Print Accuracy
+print("Accuracy:", round(Accuracy, 2))
 
 
 
